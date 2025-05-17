@@ -1,9 +1,11 @@
-import { NewsChat } from "@/components/news-chat"
+import { NewsChat } from "./components/NewsChat"
 
-export default function Home() {
+function App() {
   return (
     <main className="min-h-screen bg-black">
       <NewsChat />
     </main>
   )
 }
+
+export default App
