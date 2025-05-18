@@ -9,7 +9,7 @@ import { cn } from "../utils"
 import { v4 as uuidv4 } from 'uuid';
 
 // Environment variable must be defined
-const VITE_BASE_URL = 'http://ec2-54-90-69-202.compute-1.amazonaws.com';
+const VITE_BASE_URL = 'http://localhost:8000'; 
 if (!VITE_BASE_URL) {
   console.error('VITE_BASE_URL environment variable is not defined');
 }
