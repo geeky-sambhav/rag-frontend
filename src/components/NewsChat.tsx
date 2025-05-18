@@ -9,7 +9,7 @@ import { cn } from "../utils"
 import { v4 as uuidv4 } from 'uuid';
 
 // API configuration
-const API_BASE_URL ='http://localhost:8000'; // Change this to your actual API URL
+const API_BASE_URL =process.env.NEXT_PUBLIC_API_BASE_URL; // Change this to your actual API URL
 
 // Icons
 function SendIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -194,12 +194,7 @@ export function NewsChat() {
         content: "Hello! I'm your RAG NewsBot. Ask me anything about recent news and events.",
         role: "assistant",
         timestamp: new Date(),
-      }, {
-        id: "error",
-        content: "Failed to load chat history. Your previous messages might not be displayed.",
-        role: "assistant",
-        timestamp: new Date(),
-      }]);
+      }, ]);
     }
   };
 
