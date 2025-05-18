@@ -8,10 +8,12 @@ import { TypingIndicator } from "./TypingIndicator"
 import { cn } from "../utils"
 import { v4 as uuidv4 } from 'uuid';
 
-// API configuration
-const API_BASE_URL =process.env.NEXT_PUBLIC_API_BASE_URL; // Change this to your actual API URL
+// Environment variable must be defined
+const VITE_BASE_URL = 'http://ec2-54-90-69-202.compute-1.amazonaws.com';
+if (!VITE_BASE_URL) {
+  console.error('VITE_BASE_URL environment variable is not defined');
+}
 
-// Icons
 function SendIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -121,9 +123,15 @@ export function NewsChat() {
   // Fetch chat history from the API
   const fetchChatHistory = async (sid: string) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/history/${sid}`);
+      const response = await fetch(`${VITE_BASE_URL}/history/${sid}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      // Check content type before parsing as JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error('Response is not JSON');
       }
       
       const data = await response.json();
@@ -216,15 +224,14 @@ export function NewsChat() {
 
     setIsTyping(true)
     try {
-      const response = await fetch(`${API_BASE_URL}/chat`, {
+      const response = await fetch(`${VITE_BASE_URL}/   chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_message: userMessage.content, session_id: sessionId }),
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({ detail: 'Network response was not ok.' }));
-        throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP response was not ok. Status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -302,7 +309,7 @@ export function NewsChat() {
   const resetChat = async () => {
     if (sessionId) {
       try {
-        const response = await fetch(`${API_BASE_URL}/clear_session/${sessionId}`, {
+        const response = await fetch(`${VITE_BASE_URL}/clear_session/${sessionId}`, {
           method: 'POST',
         });
         
