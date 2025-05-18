@@ -202,7 +202,12 @@ export function NewsChat() {
         content: "Hello! I'm your RAG NewsBot. Ask me anything about recent news and events.",
         role: "assistant",
         timestamp: new Date(),
-      }, ]);
+      }, {
+        id: "error",
+        content: "Failed to load chat history. Your previous messages might not be displayed.",
+        role: "assistant",
+        timestamp: new Date(),
+      }]);
     }
   };
 
