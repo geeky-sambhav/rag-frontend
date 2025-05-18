@@ -229,7 +229,7 @@ export function NewsChat() {
 
     setIsTyping(true)
     try {
-      const response = await fetch(`${VITE_BASE_URL}/   chat`, {
+      const response = await fetch(`${VITE_BASE_URL}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_message: userMessage.content, session_id: sessionId }),
